@@ -16,9 +16,6 @@ namespace QA_Automation
 
     public class OrangeHRMWebAppShould
     {
-        //private const string LogIn = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
-
-
         [Fact]
         public void CheckIfUserIsValid()
         {
