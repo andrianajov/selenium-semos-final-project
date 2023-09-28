@@ -190,49 +190,44 @@ namespace QA_Automation
         }
 
 
-//        [Fact]
-//        public void LeaveModuleAddComment()
-//        {
-//            using (IWebDriver driver = new ChromeDriver())
-//            {
-//                var loginPage = new LoginPage(driver);
-//                loginPage.NavigateTo();
-//                loginPage.MaximizeWindow();
-//                loginPage.WaitUntilLoaded();
-//                loginPage.Username.SendKeys("Admin");
-//                loginPage.Password.SendKeys("admin123");
-//                loginPage.SubmitBtn.Click();
+        [Fact]
+        public void LeaveModuleAddComment()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var loginPage = new LoginPage(driver);
+                loginPage.NavigateTo();
+                loginPage.MaximizeWindow();
+                loginPage.WaitUntilLoaded();
+                loginPage.Username.SendKeys("Admin");
+                loginPage.Password.SendKeys("admin123");
+                loginPage.SubmitBtn.Click();
 
-//                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(4));
+                wait.Until(ExpectedConditions.ElementExists((By.XPath("//div[@class='oxd-sidepanel-body']"))));
 
-//                IWebElement LeaveModule = wait.Until(ExpectedConditions.ElementExists((By.XPath("//span[normalize-space()='Leave']"))));
-//                LeaveModule.Click();
+                var LeavePage = new LeavePage(driver);
+                LeavePage.LeaveMenuItem.Click();
 
-//                wait.Until(ExpectedConditions.ElementExists((By.XPath("//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/div[9]/div[1]/li[1]/button[1]"))));
+                wait.Until(ExpectedConditions.ElementExists((By.XPath("//span[@class='oxd-text oxd-text--span']"))));
+                LeavePage.DropDown.Click();
 
-//                IWebElement DropDown = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/div[9]/div[1]/li[1]/button[1]"));
-//                DropDown.Click();
+                wait.Until(ExpectedConditions.ElementExists((By.XPath("//p[normalize-space()='Add Comment']"))));
+                LeavePage.AddComment.Click();
 
-//                wait.Until(ExpectedConditions.ElementExists((By.XPath("//ul[@role='menu']"))));
+                wait.Until(ExpectedConditions.ElementToBeClickable((By.XPath("//textarea[@placeholder='Comment here']"))));
+                LeavePage.CommentHere.SendKeys("Can you reschedule?");
+                LeavePage.AddComment.Click();
 
-//                IWebElement AddComment = driver.FindElements(By.ClassName("oxd-table-dropdown-item"))[0];
-//                AddComment.Click();
+                LeavePage.Refresh();
 
-//                wait.Until(ExpectedConditions.ElementToBeClickable((By.XPath("//textarea[@placeholder='Comment here']"))));
+                var LeaveCommentXpath = "//div[contains(text(),'Can you reschedule?')]";
+                wait.Until(ExpectedConditions.ElementExists((By.XPath(LeaveCommentXpath))));
 
-//                driver.FindElement(By.XPath("//textarea[@placeholder='Comment here']")).SendKeys("Can you reschedule?");
+                Assert.Equal("Can you reschedule?", driver.FindElement(By.XPath(LeaveCommentXpath)).Text);
 
-//                IWebElement SaveComment = driver.FindElement(By.XPath("//button[normalize-space()='Save']"));
-//                SaveComment.Click();
-
-//                driver.Navigate().Refresh();
-
-//                wait.Until(ExpectedConditions.ElementExists((By.XPath("//div[contains(text(),'Can you reschedule?')]"))));
-
-//                Assert.Equal("Can you reschedule?", driver.FindElement(By.XPath("//div[contains(text(),'Can you reschedule?')]")).Text);
-
-//            }
-//        }
+            }
+        }
 
     }
 }
